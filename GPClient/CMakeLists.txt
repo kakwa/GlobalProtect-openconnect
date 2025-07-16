@@ -3,11 +3,12 @@ include("${CMAKE_SOURCE_DIR}/cmake/Add3rdParty.cmake")
 project(GPClient)
 
 set(gpclient_GENERATED_SOURCES)
+set(QT_DEFAULT_MAJOR_VERSION 6)
 
 configure_file(com.yuezk.qt.gpclient.desktop.in com.yuezk.qt.gpclient.desktop)
 configure_file(com.yuezk.qt.gpclient.metainfo.xml.in com.yuezk.qt.gpclient.metainfo.xml)
 
-qt5_add_dbus_interface(
+qt6_add_dbus_interface(
     gpclient_GENERATED_SOURCES
     ${CMAKE_BINARY_DIR}/com.yuezk.qt.GPService.xml
     gpserviceinterface
@@ -17,7 +18,6 @@ add_executable(gpclient
     cdpcommand.cpp
     cdpcommandmanager.cpp
     enhancedwebview.cpp
-    enhancedwebpage.cpp
     gatewayauthenticator.cpp
     gatewayauthenticatorparams.cpp
     gpgateway.cpp
@@ -43,16 +43,19 @@ add_executable(gpclient
     ${gpclient_GENERATED_SOURCES}
 )
 
+set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use, defaults to 6")
+
 add_3rdparty(
     SingleApplication
     GIT_REPOSITORY https://github.com/itay-grudev/SingleApplication.git
-    GIT_TAG v3.3.0
+    GIT_TAG v3.5.2
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
         -DCMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}
         -DCMAKE_PREFIX_PATH=$ENV{CMAKE_PREFIX_PATH}
         -DQAPPLICATION_CLASS=QApplication
+        -DQT_DEFAULT_MAJOR_VERSION=6
 )
 
 add_3rdparty(
@@ -83,17 +86,17 @@ target_include_directories(gpclient PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR}
     ${SingleApplication_INCLUDE_DIR}
     ${plog_INCLUDE_DIR}
-    ${QTKEYCHAIN_INCLUDE_DIRS}/qt5keychain
+    ${QTKEYCHAIN_INCLUDE_DIRS}/qt6keychain
 )
 
 target_link_libraries(gpclient
     ${SingleApplication_LIBRARY}
-    Qt5::Widgets
-    Qt5::Network
-    Qt5::WebSockets
-    Qt5::WebEngine
-    Qt5::WebEngineWidgets
-    Qt5::DBus
+    Qt6::Widgets
+    Qt6::Network
+    Qt6::WebSockets
+    Qt6::WebEngineCore
+    Qt6::WebEngineWidgets
+    Qt6::DBus
     QtSignals
     ${QTKEYCHAIN_LIBRARIES}
 )

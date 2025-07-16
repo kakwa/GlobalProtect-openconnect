@@ -9,7 +9,7 @@
     <project_license>AGPL-3.0-or-later</project_license>
 
     <description>
-        <p>A GlobalProtect VPN client (GUI) for Linux based on OpenConnect and built with Qt5, supports the SAML auth mode.</p>
+        <p>A GlobalProtect VPN client (GUI) for Linux based on OpenConnect and built with Qt6, supports the SAML auth mode.</p>
     </description>
 
     <categories>

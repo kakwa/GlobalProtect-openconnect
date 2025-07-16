@@ -65,18 +65,18 @@ QList<GPGateway> PortalConfigResponse::parseGateways(QXmlStreamReader &xmlReader
 
     QList<GPGateway> gateways;
 
-    while (xmlReader.name() != "external"){
+    while (xmlReader.name() != QString("external")){
         xmlReader.readNext();
     }
 
-    while (xmlReader.name() != "list"){
+    while (xmlReader.name() != QString("list")){
         xmlReader.readNext();
     }
 
     while (xmlReader.name() != xmlGateways || !xmlReader.isEndElement()) {
         xmlReader.readNext();
         // Parse the gateways -> external -> list -> entry
-        if (xmlReader.name() == "entry" && xmlReader.isStartElement()) {
+        if (xmlReader.name() == QString("entry") && xmlReader.isStartElement()) {
             GPGateway g;
             parseGateway(xmlReader, g);
             gateways.append(g);
@@ -93,17 +93,17 @@ void PortalConfigResponse::parseGateway(QXmlStreamReader &reader, GPGateway &gat
 
     auto finished = false;
     while (!finished) {
-        if (reader.name() == "entry" && reader.isStartElement()) {
+        if (reader.name() == QString("entry") && reader.isStartElement()) {
             auto address = reader.attributes().value("name").toString();
             gateway.setAddress(address);
-        } else if (reader.name() == "description" && reader.isStartElement()) { // gateway name
+        } else if (reader.name() == QString("description") && reader.isStartElement()) { // gateway name
             gateway.setName(reader.readElementText());
-        } else if (reader.name() == "priority-rule" && reader.isStartElement()) { // priority rules
+        } else if (reader.name() == QString("priority-rule") && reader.isStartElement()) { // priority rules
             parsePriorityRule(reader, gateway);
         }
 
         auto result = reader.readNext();
-        finished = result == QXmlStreamReader::Invalid || (reader.name() == "entry" && reader.isEndElement());
+        finished = result == QXmlStreamReader::Invalid || (reader.name() == QString("entry") && reader.isEndElement());
     }
 }
 
@@ -115,11 +115,11 @@ void PortalConfigResponse::parsePriorityRule(QXmlStreamReader &reader, GPGateway
 
     while (!finished) {
         // Parse the priority-rule -> entry
-        if (reader.name() == "entry" && reader.isStartElement()) {
+        if (reader.name() == QString("entry") && reader.isStartElement()) {
             auto ruleName = reader.attributes().value("name").toString();
             // move to the priority value
             while (reader.readNextStartElement()) {
-                if (reader.name() == "priority") {
+                if (reader.name() == QString("priority")) {
                     auto priority = reader.readElementText().toInt();
                     priorityRules.insert(ruleName, priority);
                     break;
@@ -127,7 +127,7 @@ void PortalConfigResponse::parsePriorityRule(QXmlStreamReader &reader, GPGateway
             }
         }
         auto result = reader.readNext();
-        finished = result == QXmlStreamReader::Invalid || (reader.name() == "priority-rule" && reader.isEndElement());
+        finished = result == QXmlStreamReader::Invalid || (reader.name() == QString("priority-rule") && reader.isEndElement());
     }
 
     gateway.setPriorityRules(priorityRules);
