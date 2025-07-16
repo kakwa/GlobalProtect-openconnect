@@ -12,7 +12,7 @@ SAMLLoginWindow::SAMLLoginWindow(QWidget *parent)
 {
     setWindowTitle("GlobalProtect Login");
     setModal(true);
-    resize(700, 550);
+    resize(700, 760);
 
     QVBoxLayout *verticalLayout = new QVBoxLayout(this);
     webView->setUrl(QUrl("about:blank"));
