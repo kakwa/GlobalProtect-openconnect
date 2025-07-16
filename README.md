@@ -1,5 +1,15 @@
+> # Disclaimer
+>
+> This project is a Fork of [yuezk/GlobalProtect-openconnect 1.x branch](https://github.com/yuezk/GlobalProtect-openconnect/tree/1.x).
+>
+> # Changes from Upstream
+>
+> List of modifications:
+> * Switch to Qt6
+
 # GlobalProtect-openconnect
-A GlobalProtect VPN client (GUI) for Linux based on Openconnect and built with Qt5, supports SAML auth mode, inspired by [gp-saml-gui](https://github.com/dlenski/gp-saml-gui).
+
+A GlobalProtect VPN client (GUI) for Linux based on Openconnect and built with Qt6, supports SAML auth mode, inspired by [gp-saml-gui](https://github.com/dlenski/gp-saml-gui).
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/3297602/133869036-5c02b0d9-c2d9-4f87-8c81-e44f68cfd6ac.png">
@@ -17,130 +27,26 @@ A GlobalProtect VPN client (GUI) for Linux based on Openconnect and built with Q
 - Supports automatically selecting the preferred gateway from the multiple gateways.
 - Supports switching gateway from the system tray menu manually.
 
-
-## Install
-
-|OS|Stable version | Development version|
-|---|--------------|--------------------|
-|Linux Mint, Ubuntu 18.04 or later|[ppa:yuezk/globalprotect-openconnect](https://launchpad.net/~yuezk/+archive/ubuntu/globalprotect-openconnect)|[ppa:yuezk/globalprotect-openconnect-snapshot](https://launchpad.net/~yuezk/+archive/ubuntu/globalprotect-openconnect-snapshot)|
-|Arch, Manjaro|[globalprotect-openconnect](https://archlinux.org/packages/extra/x86_64/globalprotect-openconnect/)|[AUR: globalprotect-openconnect-git](https://aur.archlinux.org/packages/globalprotect-openconnect-git/)|
-|Fedora|[copr: yuezk/globalprotect-openconnect](https://copr.fedorainfracloud.org/coprs/yuezk/globalprotect-openconnect/)|[copr: yuezk/globalprotect-openconnect](https://copr.fedorainfracloud.org/coprs/yuezk/globalprotect-openconnect/)|
-|openSUSE, CentOS 8|[OBS: globalprotect-openconnect](https://build.opensuse.org/package/show/home:yuezk/globalprotect-openconnect)|[OBS: globalprotect-openconnect-snapshot](https://build.opensuse.org/package/show/home:yuezk/globalprotect-openconnect-snapshot)|
-
-Add the repository in the above table and install it with your favorite package manager tool.
-
-[![Arch package](https://repology.org/badge/version-for-repo/arch/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![AUR package](https://repology.org/badge/version-for-repo/aur/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![Manjaro Stable package](https://repology.org/badge/version-for-repo/manjaro_stable/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![Manjaro Testing package](https://repology.org/badge/version-for-repo/manjaro_testing/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![Manjaro Unstable package](https://repology.org/badge/version-for-repo/manjaro_unstable/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![nixpkgs unstable package](https://repology.org/badge/version-for-repo/nix_unstable/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-[![Parabola package](https://repology.org/badge/version-for-repo/parabola/globalprotect-openconnect.svg)](https://repology.org/project/globalprotect-openconnect/versions)
-
-### Linux Mint, Ubuntu 18.04 or later
-
-```sh
-sudo add-apt-repository ppa:yuezk/globalprotect-openconnect
-sudo apt-get update
-sudo apt-get install globalprotect-openconnect
-```
-
-> For Linux Mint, you might need to import the GPG key with: `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7937C393082992E5D6E4A60453FC26B43838D761` if you encountered an error `gpg: keyserver receive failed: General error`.
-
-### Arch Linux / Manjaro
-
-```sh
-sudo pacman -S globalprotect-openconnect
-```
-
-### AUR snapshot version
-
-```sh
-yay -S globalprotect-openconnect-git
-```
-
-### Fedora
-
-```sh
-sudo dnf copr enable yuezk/globalprotect-openconnect
-sudo dnf install globalprotect-openconnect
-```
-
-### openSUSE
-
-- openSUSE Tumbleweed
-  ```sh
-  sudo zypper ar https://download.opensuse.org/repositories/home:/yuezk/openSUSE_Tumbleweed/home:yuezk.repo
-  sudo zypper ref
-  sudo zypper install globalprotect-openconnect
-  ```
-
-- openSUSE Leap
-
-  ```sh  
-  sudo zypper ar https://download.opensuse.org/repositories/home:/yuezk/15.4/home:yuezk.repo
-  
-  sudo zypper ref
-  sudo zypper install globalprotect-openconnect
-  ```
-### CentOS 8
-
-1. Add the repository: `https://download.opensuse.org/repositories/home:/yuezk/CentOS_8/home:yuezk.repo`
-1. Install `globalprotect-openconnect`
-
-
 ## Build & Install from source code
 
 Clone this repo with:
 
 ```sh
-git clone https://github.com/yuezk/GlobalProtect-openconnect.git
+git clone https://github.com/kakwa/GlobalProtect-openconnect.git
 cd GlobalProtect-openconnect
 ```
 
-### MX Linux
-The following instructions are for **MX-21.2.1_x64 KDE**.
-
-```sh
-sudo apt install qttools5-dev libsecret-1-dev libqt5keychain1
-./scripts/install-debian.sh
-```
-
 ### Ubuntu/Mint
-
-> **⚠️ REQUIRED for Ubuntu 18.04 ⚠️**
->
-> Add this [dwmw2/openconnect](https://launchpad.net/~dwmw2/+archive/ubuntu/openconnect) PPA first to install the latest openconnect.
->
-> ```sh
-> sudo add-apt-repository ppa:dwmw2/openconnect
-> sudo apt-get update
-> ```
 
 Build and install with:
 
 ```sh
 ./scripts/install-ubuntu.sh
 ```
-### openSUSE
-
-Build and install with:
-
-```sh
-./scripts/install-opensuse.sh
-```
-
-### Fedora
-
-Build and install with:
-
-```sh
-./scripts/install-fedora.sh
-```
 
 ### Other Linux
 
-Install the Qt5 dependencies and OpenConnect:
+Install the Qt6 dependencies and OpenConnect:
 
 - QtCore
 - QtWebEngine
@@ -154,20 +60,6 @@ Install the Qt5 dependencies and OpenConnect:
 ```sh
 ./scripts/install.sh
 ```
-
-
-### NixOS
-  In `configuration.nix`:
-
-  ```
-  services.globalprotect = {
-    enable = true;
-    # if you need a Host Integrity Protection report
-    csdWrapper = "${pkgs.openconnect}/libexec/openconnect/hipreport.sh";
-  };
-
-  environment.systemPackages = [ globalprotect-openconnect ];
-  ```
 
 ## Run
 
