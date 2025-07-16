@@ -3,6 +3,7 @@ include("${CMAKE_SOURCE_DIR}/cmake/Add3rdParty.cmake")
 project(GPService)
 
 set(gpservice_GENERATED_SOURCES)
+set(QT_DEFAULT_MAJOR_VERSION 6)
 
 execute_process(COMMAND logname OUTPUT_VARIABLE CMAKE_LOGNAME)
 string(STRIP "${CMAKE_LOGNAME}" CMAKE_LOGNAME)
@@ -14,13 +15,13 @@ configure_file(dbus/com.yuezk.qt.GPService.service.in dbus/com.yuezk.qt.GPServic
 configure_file(systemd/gpservice.service.in systemd/gpservice.service)
 
 # generate the dbus xml definition
-qt5_generate_dbus_interface(
+qt6_generate_dbus_interface(
     gpservice.h
     ${CMAKE_BINARY_DIR}/com.yuezk.qt.GPService.xml
 )
 
 # generate dbus adaptor
-qt5_add_dbus_adaptor(
+qt6_add_dbus_adaptor(
     gpservice_GENERATED_SOURCES
     ${CMAKE_BINARY_DIR}/com.yuezk.qt.GPService.xml
     gpservice.h
@@ -34,16 +35,18 @@ add_executable(gpservice
     ${gpservice_GENERATED_SOURCES}
 )
 
+set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use, defaults to 6")
 add_3rdparty(
     SingleApplication
     GIT_REPOSITORY https://github.com/itay-grudev/SingleApplication.git
-    GIT_TAG v3.3.0
+    GIT_TAG v3.5.2
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DCMAKE_CXX_FLAGS_RELEASE=${CMAKE_CXX_FLAGS_RELEASE}
         -DCMAKE_FIND_ROOT_PATH=${CMAKE_FIND_ROOT_PATH}
         -DCMAKE_PREFIX_PATH=$ENV{CMAKE_PREFIX_PATH}
         -DQAPPLICATION_CLASS=QCoreApplication
+        -DQT_DEFAULT_MAJOR_VERSION=6
 )
 
 ExternalProject_Get_Property(SingleApplication-${PROJECT_NAME} SOURCE_DIR BINARY_DIR)
@@ -61,9 +64,9 @@ target_include_directories(gpservice PRIVATE
 
 target_link_libraries(gpservice
     ${SingleApplication_LIBRARY}
-    Qt5::Core
-    Qt5::Network
-    Qt5::DBus
+    Qt6::Core
+    Qt6::Network
+    Qt6::DBus
     QtSignals
     inih
 )

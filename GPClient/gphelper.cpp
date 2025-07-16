@@ -1,6 +1,5 @@
 #include <QtCore/QXmlStreamReader>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
 #include <QtNetwork/QNetworkRequest>
@@ -62,7 +61,7 @@ QUrlQuery gpclient::helper::parseGatewayResponse(const QByteArray &xml)
 
     while (!xmlReader.atEnd()) {
         xmlReader.readNextStartElement();
-        if (xmlReader.name() == "argument") {
+        if (xmlReader.name() == QString("argument")) {
             args.append(QUrl::toPercentEncoding(xmlReader.readElementText()));
         }
     }
@@ -91,23 +90,20 @@ void gpclient::helper::openMessageBox(const QString &message, const QString& inf
 
 void gpclient::helper::moveCenter(QWidget *widget)
 {
-    QDesktopWidget *desktop = QApplication::desktop();
+    if (!widget)
+        return;
 
-    int screenWidth, width;
-    int screenHeight, height;
-    int x, y;
-    QSize windowSize;
+    // Get the screen associated with the widget
+    QScreen *screen = widget->screen();
+    if (!screen)
+        screen = QGuiApplication::primaryScreen();
 
-    screenWidth = desktop->width();
-    screenHeight = desktop->height();
+    QRect screenGeometry = screen->availableGeometry();
+    QSize windowSize = widget->size();
 
-    windowSize = widget->size();
-    width = windowSize.width();
-    height = windowSize.height();
+    int x = (screenGeometry.width() - windowSize.width()) / 2 + screenGeometry.x();
+    int y = (screenGeometry.height() - windowSize.height()) / 2 + screenGeometry.y() - 50;
 
-    x = (screenWidth - width) / 2;
-    y = (screenHeight - height) / 2;
-    y -= 50;
     widget->move(x, y);
 }
 

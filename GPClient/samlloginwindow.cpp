@@ -1,5 +1,5 @@
 #include <QtWidgets/QVBoxLayout>
-#include <QtWebEngineWidgets/QWebEngineProfile>
+#include <QtWebEngineCore/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QWebEngineCookieStore>
 #include <plog/Log.h>
